@@ -91,7 +91,7 @@ void setup(){
   //boot up the MP3 Player Shield
   result = MP3player.begin();
   //check result, see readme for error codes.
-  MP3player.setVolume(0,0);
+  MP3player.SetVolume(0,0);
  
   if(result != 0) {
     Serial.print("Error code: ");
