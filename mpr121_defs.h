@@ -1,5 +1,5 @@
 /*
-    MPR121.h
+    MPR121_defs.h
 	April 8, 2010
 	by: Jim Lindblom
 

@@ -26,7 +26,7 @@ void setup() {
 ***********************************************************/
 
 // touch shield includes
-#include "mpr121.h"
+#include "mpr121_setup.h"
 #include <Wire.h>
 #define MPR121 0x5A // address set on touch shield
 
@@ -201,120 +201,7 @@ void readTouchInputs(){
   }
 }
 
-
-
-
-void mpr121_setup(void){
-  
-// this code is all taken directly from the MPR121 Touch Sensing Design Guidelines document
-
-set_register(MPR121, SRST, 0x63); // soft reset if MPR121 not reset properly
-
-set_register(MPR121, CTL0, 0xFF); // optional LED config section
-set_register(MPR121, CTL1, 0xFF);
-set_register(MPR121, DIR, 0xFF);
-set_register(MPR121, EN, 0xFF);
-set_register(MPR121, DAT, 0xFF);
-
-//touch pad baseline filter 
-//rising: baseline quick rising 
-set_register(MPR121, MHDR, 0x3F);        // max half delta rising      0..3F
-set_register(MPR121, NHDR, 0x3F);        // noise half delta rising    0..3F
-set_register(MPR121, NCLR, 0x05);        // noise count limit rising   0..FF
-set_register(MPR121, FDLR, 0x00);        // delay limit rising         0..FF
-
-//falling: baseline slow falling 
-set_register(MPR121, MHDF, 0x00);        // max half delta falling
-set_register(MPR121, NHDF, 0x3F);        // noise half delta falling
-set_register(MPR121, NCLF, 0x10);        // noise count limit falling
-set_register(MPR121, FDLF, 0x03);        // delay limit falling
-
-//touched: baseline keep 
-set_register(MPR121, NHDT, 0x00);        // noise half delta touched  
-set_register(MPR121, NCLT, 0x00);        // noise count touched
-set_register(MPR121, FDLT, 0xFF);        // delay limit touched
-
-// this looks like what we're looking for
-
-//Proximity baseline filter
-//rising: very quick rising 
-set_register(MPR121, MHDPROXR, 0x0F); 
-set_register(MPR121, NHDPROXR, 0x0F); 
-set_register(MPR121, NCLPROXR, 0x00); 
-set_register(MPR121, FDLPROXR, 0x00);
-
-//falling: very slow rising 
-set_register(MPR121, 0x3A,0x01); 
-set_register(MPR121, 0x3B,0x01); 
-set_register(MPR121, 0x3C,0xFF); 
-set_register(MPR121, 0x3D,0xFF);
-
-//touched 
-set_register(MPR121, NHDPROXT, 0x00); 
-set_register(MPR121, NCLPROXT, 0x00); 
-set_register(MPR121, FDLPROXT, 0x00);
-
-//Touch pad threshold 
-set_register(MPR121, E0TTH, TouchThr); 
-set_register(MPR121, E0RTH, ReleaseThr); 
-set_register(MPR121, E1TTH, TouchThr); 
-set_register(MPR121, E1RTH, ReleaseThr); 
-set_register(MPR121, E2TTH, TouchThr); 
-set_register(MPR121, E2RTH, ReleaseThr); 
-set_register(MPR121, E3TTH, TouchThr); 
-set_register(MPR121, E3RTH, ReleaseThr); 
-set_register(MPR121, E4TTH, TouchThr); 
-set_register(MPR121, E4RTH, ReleaseThr); 
-set_register(MPR121, E5TTH, TouchThr); 
-set_register(MPR121, E5RTH, ReleaseThr); 
-set_register(MPR121, E6TTH, TouchThr); 
-set_register(MPR121, E6RTH, ReleaseThr); 
-set_register(MPR121, E7TTH, TouchThr); 
-set_register(MPR121, E7RTH, ReleaseThr); 
-set_register(MPR121, E8TTH, TouchThr); 
-set_register(MPR121, E8RTH, ReleaseThr); 
-set_register(MPR121, E9TTH, TouchThr); 
-set_register(MPR121, E9RTH, ReleaseThr); 
-set_register(MPR121, E10TTH, TouchThr); 
-set_register(MPR121, E10RTH, ReleaseThr); 
-set_register(MPR121, E11TTH, TouchThr); 
-set_register(MPR121, E11RTH, ReleaseThr);
-
-//Proximity threshold
-set_register(MPR121, E12TTH, TouchThr); 
-set_register(MPR121, E12RTH, ReleaseThr);
-
-//touch and release interrupt debounce
-  set_register(MPR121, DTR, 0x11);
-
-//AFE and filter configuration 
-set_register(MPR121, AFE1, 0xFF);  
-//set_register(MPR121, AFE2, 0x24);
-set_register(MPR121, AFE2, 0x38);
-//set_register(MPR121, ECR, 0x80);
-set_register(MPR121, ECR, 0x0C);
-
-//Auto Configuration 
-set_register(MPR121, ACCR0, 0x0B);
-//set_register(MPR121, ACCR1, 0x80);
-
-set_register(MPR121, USL, 0xC8); 
-set_register(MPR121, LSL, 0x82); 
-set_register(MPR121, TL, 0xB4); 
-set_register(MPR121, ECR, 0xBC);
-  
-}
-
-// helper functions to keep the above code clean
-
 boolean checkInterrupt(void){
   return digitalRead(irqpin);
 }
 
-
-void set_register(int address, unsigned char r, unsigned char v){
-    Wire.beginTransmission(address);
-    Wire.write(r);
-    Wire.write(v);
-    Wire.endTransmission();
-}
