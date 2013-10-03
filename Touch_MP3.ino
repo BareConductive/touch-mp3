@@ -56,8 +56,6 @@ byte result;
 int lastPlayed = 0;
 
 // touch behaviour definitions
-#define TouchThr 5
-#define ReleaseThr 3 
 #define firstPin 0
 #define lastPin 11
 
