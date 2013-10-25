@@ -1,37 +1,26 @@
 /**********************************************************
-       SINGLE VERSION - ORANGE STICKERS 
- **********************************************************
 
-  Bare Conductive Touch MP3 player for Universal
-  
-  Uses SparkFun Touch Shield and MP3 shield
-  
-  Touch shield is modified to bring the interrupt out
-  to Arduino digital pin 4, not 2-f
-  
-  MP3 shield is unmodified
+  Bare Conductive Touch MP3 player
   
  **********************************************************  
   
   Code is by Stefan Dzisiewski-Smith, building on example
   code from Sparkfun Website and Jim Lindblom
-  
-*Slighty modified by Peter Krige to work with ATMega 32U4* (for internal use only)
-I have signed the additions for now as I am not properly connected to GitHub.
-  
 
-void setup() {
-  
-  if(MP3player.begin() != 0) {Serial.print(F("ERROR"));
+  Extra modifications by Peter Krige (PK2_modified)
+
 ***********************************************************/
 
-// touch shield includes
-#include "mpr121_setup.h"
+// touch includes
+#include <MPR121.h>
 #include <Wire.h>
-#define MPR121 0x5A // address set on touch shield
+#define MPR121_ADDR 0x5A
+#define MPR121_INT 4
 
-// mp3 shield includes
+// touch variables
+int touchStates[13];
 
+// mp3 includes
 #include <SPI.h>
 #include <SdFat.h>
 #include <SdFatUtil.h> 
@@ -45,50 +34,32 @@ void setup() {
 //  #include <SimpleTimer.h>
 //#endif
 
-// touch shield variables
-int irqpin = 4;
-boolean touchStates[12]; //to keep track of the previous touch states
 
-// mp3 shield variables
+// mp3 variables
 SFEMP3Shield MP3player;
 byte temp;
 byte result;
 int lastPlayed = 0;
+SdFat sd; 
 
 // touch behaviour definitions
 #define firstPin 0
 #define lastPin 11
 
-SdFat sd; // newly required in Arduino 1.01.00 and higher - This provides more immediate access to the SdCard's files by the main sketch. (Peter Krige)
-void setup(){
 
-
-  
-  pinMode(irqpin, INPUT);
-  digitalWrite(irqpin, HIGH); //enable pullup resistor
-  
-  pinMode(1, INPUT);
-  pinMode(13, OUTPUT);
-  digitalWrite(13, LOW);
-  delay(1000);
-  
-  
-  Serial.begin(115200);
+void setup(){  
+  Serial.begin(57600);
    
-  //while (!Serial) ; {} //use for debugging with the serail monitor - this is needed with all ATMega 32U4s. Uncomment when using the serial monitor (Peter Krige) 
+  while (!Serial) ; {} //uncomment when not using the serial monitor
  
-  Serial.println("Bare Conductive Touch Sensitive Album Art Demo");
-  Serial.println("SINGLE VERSION");  
-  Wire.begin();
+  Serial.println("Bare Conductive Touch MP3 player");
 
-  mpr121_setup();
+  if(!MPR121.begin(MPR121_ADDR)) Serial.println("error setting up MPR121");
   
-  sd.begin(); //open up communication with the SD card (Peter Krige)
-  if(!sd.begin(SD_SEL, SPI_HALF_SPEED)) sd.initErrorHalt(); //newly required in 1.01.00 and higher (Peter Krige)
+  sd.begin(); //open up communication with the SD card 
+  if(!sd.begin(SD_SEL, SPI_HALF_SPEED)) sd.initErrorHalt();
   
-  //boot up the MP3 Player Shield
   result = MP3player.begin();
-  //check result, see readme for error codes.
   MP3player.SetVolume(0,0);
  
   if(result != 0) {
@@ -108,8 +79,6 @@ void loop(){
 //  MP3player.available();
 //#endif
 
-  digitalWrite(13, digitalRead(1)); 
-
   readTouchInputs();
 }
 
@@ -118,7 +87,7 @@ void readTouchInputs(){
   if(!checkInterrupt()){
     
     //read the touch state from the MPR121
-    Wire.requestFrom(MPR121,2); 
+    Wire.requestFrom(MPR121_ADDR,2); 
     
     byte LSB = Wire.read();
     byte MSB = Wire.read();
@@ -200,6 +169,7 @@ void readTouchInputs(){
 }
 
 boolean checkInterrupt(void){
-  return digitalRead(irqpin);
+  //return digitalRead(irqpin);
+  return MPR121.touchStatusChanged();
 }
 
