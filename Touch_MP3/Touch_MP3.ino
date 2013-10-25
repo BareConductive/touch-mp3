@@ -17,9 +17,6 @@
 #define MPR121_ADDR 0x5A
 #define MPR121_INT 4
 
-// touch variables
-int touchStates[13];
-
 // mp3 includes
 #include <SPI.h>
 #include <SdFat.h>
@@ -50,17 +47,18 @@ SdFat sd;
 void setup(){  
   Serial.begin(57600);
    
-  while (!Serial) ; {} //uncomment when not using the serial monitor
+//  while (!Serial) ; {} //uncomment when not using the serial monitor
  
   Serial.println("Bare Conductive Touch MP3 player");
 
   if(!MPR121.begin(MPR121_ADDR)) Serial.println("error setting up MPR121");
+  MPR121.setInterruptPin(MPR121_INT);
   
   sd.begin(); //open up communication with the SD card 
   if(!sd.begin(SD_SEL, SPI_HALF_SPEED)) sd.initErrorHalt();
   
   result = MP3player.begin();
-  MP3player.SetVolume(0,0);
+  MP3player.SetVolume(40,40);
  
   if(result != 0) {
     Serial.print("Error code: ");
@@ -84,21 +82,15 @@ void loop(){
 
 
 void readTouchInputs(){
-  if(!checkInterrupt()){
+  if(MPR121.touchStatusChanged()){
     
-    //read the touch state from the MPR121
-    Wire.requestFrom(MPR121_ADDR,2); 
-    
-    byte LSB = Wire.read();
-    byte MSB = Wire.read();
-    
-    uint16_t touched = ((MSB << 8) | LSB); //16bits that make up the touch states
+    MPR121.updateTouchData();
     
     int touchedCount = 0;
     
     // count number of touched inputs
     for (int i=0; i<12; i++){
-      if(touched & (1<<i)){
+      if(MPR121.getTouchData(i)){
         touchedCount++;  
       }  
     }
@@ -107,16 +99,13 @@ void readTouchInputs(){
     // ignore multiple touches
     if(touchedCount<=1){
       for (int i=0; i < 12; i++){  // Check which electrodes were pressed
-        if(touched & (1<<i)){
+        if(MPR121.isNewTouch(i)){
         
-          if(touchStates[i] == 0){
             //pin i was just touched
             Serial.print("pin ");
             Serial.print(i);
             Serial.println(" was just touched");\
             
-            // 9..11 are the pins broken out on the side header
-            // we map these to files 1..3 on the MP3 shield
             if(i<=lastPin && i>=firstPin){
               if(MP3player.isPlaying()){
                 if(lastPlayed==i){
@@ -144,32 +133,15 @@ void readTouchInputs(){
                 Serial.println(i-firstPin+1);
                 lastPlayed = i;
               }
-            }
-          
-          }else if(touchStates[i] == 1){
-            //pin i is still being touched
-          }  
-        
-          touchStates[i] = 1;      
+            }     
         }else{
-          if(touchStates[i] == 1){
+          if(MPR121.isNewRelease(i)){
             Serial.print("pin ");
             Serial.print(i);
             Serial.println(" is no longer being touched");
-            
-            //pin i is no longer being touched
-         }
-          
-          touchStates[i] = 0;
+         } 
         }
-      
       }
     }
   }
 }
-
-boolean checkInterrupt(void){
-  //return digitalRead(irqpin);
-  return MPR121.touchStatusChanged();
-}
-
