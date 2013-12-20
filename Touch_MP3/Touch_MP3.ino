@@ -14,7 +14,7 @@
 // touch includes
 #include <MPR121.h>
 #include <Wire.h>
-#define MPR121_ADDR 0x5A
+#define MPR121_ADDR 0x5C
 #define MPR121_INT 4
 
 // mp3 includes
@@ -51,6 +51,7 @@ void setup(){
     Serial.print(result);
     Serial.println(" when trying to start MP3 player");
    }
+   
 }
 
 void loop(){
