@@ -32,19 +32,29 @@ int lastPlayed = 0;
 #define firstPin 0
 #define lastPin 11
 
+// sd card instantiation
+SdFat sd;
+
+// define LED_BUILTIN for older versions of Arduino
+#ifndef LED_BUILTIN
+#define LED_BUILTIN 13
+#endif
 
 void setup(){  
   Serial.begin(57600);
+  
+  pinMode(LED_BUILTIN, OUTPUT);
    
-  //while (!Serial) ; {} //uncomment when not using the serial monitor 
+  //while (!Serial) ; {} //uncomment when using the serial monitor 
   Serial.println("Bare Conductive Touch MP3 player");
+
+  if(!sd.begin(SD_SEL, SPI_HALF_SPEED)) sd.initErrorHalt();
 
   if(!MPR121.begin(MPR121_ADDR)) Serial.println("error setting up MPR121");
   MPR121.setInterruptPin(MPR121_INT);
 
-  
   result = MP3player.begin();
-  MP3player.SetVolume(40,40);
+  MP3player.setVolume(10,10);
  
   if(result != 0) {
     Serial.print("Error code: ");
@@ -74,7 +84,8 @@ void readTouchInputs(){
             //pin i was just touched
             Serial.print("pin ");
             Serial.print(i);
-            Serial.println(" was just touched");\
+            Serial.println(" was just touched");
+            digitalWrite(LED_BUILTIN, HIGH);
             
             if(i<=lastPin && i>=firstPin){
               if(MP3player.isPlaying()){
@@ -82,14 +93,14 @@ void readTouchInputs(){
                   // if we're already playing the requested track, stop it
                   MP3player.stopTrack();
                   Serial.print("stopping track ");
-                  Serial.println(i-firstPin+1);
+                  Serial.println(i-firstPin);
                 } else {
                   // if we're already playing a different track, stop that 
                   // one and play the newly requested one
                   MP3player.stopTrack();
-                  MP3player.playTrack(i-firstPin+1); // add one as the first track is Track1.mp3, not Track0.mp3
+                  MP3player.playTrack(i-firstPin);
                   Serial.print("playing track ");
-                  Serial.println(i-firstPin+1);
+                  Serial.println(i-firstPin);
                   
                   // don't forget to update lastPlayed - without it we don't
                   // have a history
@@ -98,9 +109,9 @@ void readTouchInputs(){
               } else {
                 // if we're playing nothing, play the requested track 
                 // and update lastplayed
-                MP3player.playTrack(i-firstPin+1);
+                MP3player.playTrack(i-firstPin);
                 Serial.print("playing track ");
-                Serial.println(i-firstPin+1);
+                Serial.println(i-firstPin);
                 lastPlayed = i;
               }
             }     
@@ -109,6 +120,7 @@ void readTouchInputs(){
             Serial.print("pin ");
             Serial.print(i);
             Serial.println(" is no longer being touched");
+            digitalWrite(LED_BUILTIN, LOW);
          } 
         }
       }
