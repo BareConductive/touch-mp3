@@ -28,7 +28,7 @@ Simple touch-to-MP3 code for the [Bare Conductive Touch Board](http://www.bareco
 	
 * [Bare Conductive MPR121 library](https://github.com/bareconductive/mpr121) (zip file download [here](https://github.com/bareconductive/mpr121/archive/master.zip))
 
-* [Bare Conductive Arduino Hardware Plugins](https://github.com/bareconductive/bare_conductive_arduino) (zip file download [here](https://github.com/bareconductive/bare_conductive_arduino/archive/master.zip)) - instructions on installing this hardware plugin folder are available [here](https://github.com/bareconductive/bare_conductive_arduino).
+* [Bare Conductive Arduino Hardware Plugins](https://github.com/bareconductive/bare-conductive-arduino) (zip file download [here](https://github.com/bareconductive/bare-conductive-arduino/archive/master.zip)) - instructions on installing this hardware plugin folder are available [here](https://github.com/bareconductive/bare-conductive-arduino).
 
 
 ## Install
