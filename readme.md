@@ -26,15 +26,15 @@ Simple touch-to-MP3 code for the [Bare Conductive Touch Board](http://www.bareco
 	```
 	If you are using Arduino 1.5.6 or later you will not need to do this.
 	
-* [Bare Conductive MPR121 library](https://github.com/bareconductive/mpr121) (zip file download [here](https://github.com/bareconductive/mpr121/archive/master.zip))
+* [Bare Conductive MPR121 library](https://github.com/bareconductive/mpr121) (zip file download [here](https://github.com/bareconductive/mpr121/archive/public.zip))
 
-* [Bare Conductive Arduino Hardware Plugins](https://github.com/bareconductive/bare-conductive-arduino) (zip file download [here](https://github.com/bareconductive/bare-conductive-arduino/archive/master.zip)) - instructions on installing this hardware plugin folder are available [here](https://github.com/bareconductive/bare-conductive-arduino).
+* [Bare Conductive Arduino Hardware Plugins](https://github.com/bareconductive/bare-conductive-arduino) (zip file download [here](https://github.com/bareconductive/bare-conductive-arduino/archive/public.zip)) - instructions on installing this hardware plugin folder are available [here](https://github.com/bareconductive/bare-conductive-arduino).
 
 
 ## Install
 
 1. Close the Arduino IDE if you have it open.
-1. Download the [.zip](./archive/master.zip) or clone the repository to your local machine - if downloading the .zip, extract the contents somewhere that suits you.
+1. Download the [.zip](./archive/public.zip) or clone the repository to your local machine - if downloading the .zip, extract the contents somewhere that suits you.
 1. Take the **Touch_MP3** folder and move it to **Arduino Sketchbook Folder**. This will be different for each operating system: 
 
 	**Windows**
@@ -56,5 +56,3 @@ Simple touch-to-MP3 code for the [Bare Conductive Touch Board](http://www.bareco
 
 	If this folder does not exist, create it first.
 1. Reopen the Arduino IDE - you should now be able to open the sketch in the **File -> Sketchbook** menu.
-
-
