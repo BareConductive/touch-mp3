@@ -34,7 +34,7 @@ Simple touch-to-MP3 code for the [Bare Conductive Touch Board](http://www.bareco
 ## Install
 
 1. Close the Arduino IDE if you have it open.
-1. Download the [.zip](./archive/public.zip) or clone the repository to your local machine - if downloading the .zip, extract the contents somewhere that suits you.
+1. Download the [.zip](https://github.com/BareConductive/touch-mp3/archive/public.zip) or clone the repository to your local machine - if downloading the .zip, extract the contents somewhere that suits you.
 1. Take the **Touch_MP3** folder and move it to **Arduino Sketchbook Folder**. This will be different for each operating system: 
 
 	**Windows**
