@@ -11,18 +11,14 @@ Simple touch-to-MP3 code for the [Bare Conductive Touch Board](http://www.bareco
 
 * [SFEMP3shield library](https://github.com/madsci1016/Sparkfun-MP3-Player-Shield-Arduino-Library) (zip file download [here](https://github.com/madsci1016/Sparkfun-MP3-Player-Shield-Arduino-Library/archive/master.zip)) - if you are using Arduino 1.0.5 you will need to edit the line containing
 
-	
-
 	```
 	#define BARETOUCH 0
-
 	```
 	
 	in SFEMP3ShieldConfig.h to read
 	
 	```
 	#define BARETOUCH 1
-
 	```
 	If you are using Arduino 1.5.6 or later you will not need to do this.
 	
