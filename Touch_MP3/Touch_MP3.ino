@@ -24,6 +24,9 @@
 
 *******************************************************************************/
 
+// compiler error handling
+#include "Compiler_Errors.h"
+
 // touch includes
 #include <MPR121.h>
 #include <Wire.h>
