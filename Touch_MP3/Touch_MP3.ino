@@ -69,6 +69,9 @@ void setup(){
   if(!MPR121.begin(MPR121_ADDR)) Serial.println("error setting up MPR121");
   MPR121.setInterruptPin(MPR121_INT);
 
+  MPR121.setTouchThreshold(40);
+  MPR121.setReleaseThreshold(20);
+
   result = MP3player.begin();
   MP3player.setVolume(10,10);
  
