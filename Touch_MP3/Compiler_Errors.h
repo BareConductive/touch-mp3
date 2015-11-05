@@ -23,10 +23,9 @@
 #ifndef COMPILER_ERRORS_H
 #define COMPILER_ERRORS_H
 
-	// our automatic SFEMP3Shield library pin mapping only works with
-	// Arduino >= 1.5.6
-	#if ARDUINO < 156 
-	  #error Please upgrade your Arduino IDE to 1.5.6 or greater
+	// we only support Arduino 1.6.5 or greater
+	#if ARDUINO < 165
+	  #error Please upgrade your Arduino IDE to 1.6.5 or greater
 	#else 
 		// for SFEMP3Shield pin mapping to work correctly Bare Conductive Touch Board
 		// must be selected in Tools -> Board
