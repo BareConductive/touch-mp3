@@ -5,14 +5,7 @@
 Simple touch-to-MP3 code for the [Bare Conductive Touch Board](http://www.bareconductive.com/shop/touch-board/). Touch electrode 0, **TRACK000.MP3** plays from the micro SD card. Touch electrode 1, **TRACK001.MP3** plays from the micro SD card, and so on. This is the code that ships with the [Touch Board](http://www.bareconductive.com/shop/touch-board/).
 
 ## Requirements
-* [Arduino](http://arduino.cc/en/Main/Software) 1.6.6 or later
-
-* Arduino's instructions for installing libraries are available [here](http://arduino.cc/en/Guide/Libraries)
-
-* [SFEMP3shield library](https://github.com/madsci1016/Sparkfun-MP3-Player-Shield-Arduino-Library) (zip file download [here](https://github.com/madsci1016/Sparkfun-MP3-Player-Shield-Arduino-Library/archive/master.zip)) 	
-* [Bare Conductive MPR121 library](https://github.com/bareconductive/mpr121) (zip file download [here](https://github.com/bareconductive/mpr121/archive/public.zip))
-
-* [Bare Conductive Arduino Hardware Plugins](https://github.com/bareconductive/bare-conductive-arduino) (zip file download [here](https://github.com/bareconductive/bare-conductive-arduino/archive/public.zip)) - instructions on installing this hardware plugin folder are available [here](https://github.com/bareconductive/bare-conductive-arduino).
+* You should make sure that you have followed our [Setting up Arduino with your Touch Board](http://www.bareconductive.com/make/setting-up-arduino-with-your-touch-board/) tutorial before using this (or any other) of our code examples
 
 
 ## Install
