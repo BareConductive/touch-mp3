@@ -1,11 +1,11 @@
-[![Bare Conductive](https://www.dropbox.com/s/7qmvpvst3kal3qv/LOGO_256x106.png?dl=1)](http://www.bareconductive.com/)
+[![Bare Conductive](http://bareconductive.com/assets/images/LOGO_256x106.png)](http://www.bareconductive.com/)
 
 # Bare Conductive Touch MP3 Demo Code
 
 Simple touch-to-MP3 code for the [Bare Conductive Touch Board](http://www.bareconductive.com/shop/touch-board/). Touch electrode 0, **TRACK000.MP3** plays from the micro SD card. Touch electrode 1, **TRACK001.MP3** plays from the micro SD card, and so on. This is the code that ships with the [Touch Board](http://www.bareconductive.com/shop/touch-board/).
 
 ## Requirements
-* [Arduino](http://arduino.cc/en/Main/Software) 1.5.6 or later
+* [Arduino](http://arduino.cc/en/Main/Software) 1.6.6 or later
 
 * Arduino's instructions for installing libraries are available [here](http://arduino.cc/en/Guide/Libraries)
 
