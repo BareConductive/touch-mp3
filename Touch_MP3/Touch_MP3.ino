@@ -44,17 +44,20 @@ SFEMP3Shield MP3player;
 byte result;
 int lastPlayed = 0;
 
+// mp3 behaviour defines
+#define REPLAY_MODE TRUE  // By default, touching an electrode repeatedly will 
+                          // play the track again from the start each time.
+                          //
+                          // If you set this to FALSE, repeatedly touching an 
+                          // electrode will stop the track if it is already 
+                          // playing, or play it from the start if it is not.
+
 // touch behaviour definitions
 #define firstPin 0
 #define lastPin 11
 
 // sd card instantiation
 SdFat sd;
-
-// define LED_BUILTIN for older versions of Arduino
-#ifndef LED_BUILTIN
-#define LED_BUILTIN 13
-#endif
 
 void setup(){  
   Serial.begin(57600);
@@ -108,14 +111,15 @@ void readTouchInputs(){
             
             if(i<=lastPin && i>=firstPin){
               if(MP3player.isPlaying()){
-                if(lastPlayed==i){
+                if(lastPlayed==i && !REPLAY_MODE){
                   // if we're already playing the requested track, stop it
+                  // (but only if we're in REPLAY_MODE)
                   MP3player.stopTrack();
                   Serial.print("stopping track ");
                   Serial.println(i-firstPin);
                 } else {
-                  // if we're already playing a different track, stop that 
-                  // one and play the newly requested one
+                  // if we're already playing a different track (or we're in
+                  // REPLAY_MODE), stop and play the newly requested one
                   MP3player.stopTrack();
                   MP3player.playTrack(i-firstPin);
                   Serial.print("playing track ");
