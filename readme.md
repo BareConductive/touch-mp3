@@ -2,7 +2,26 @@
 
 # Bare Conductive Touch MP3 Demo Code
 
-Simple touch-to-MP3 code for the [Bare Conductive Touch Board](http://www.bareconductive.com/shop/touch-board/). Touch electrode 0, **TRACK000.MP3** plays from the micro SD card. Touch electrode 1, **TRACK001.MP3** plays from the micro SD card, and so on. This is the code that ships with the [Touch Board](http://www.bareconductive.com/shop/touch-board/).
+Simple touch-to-MP3 code for the [Bare Conductive Touch Board](http://www.bareconductive.com/shop/touch-board/).
+
+You need twelve MP3 files named TRACK000.mp3 to TRACK011.mp3 in the root of the microSD card. 
+ 
+When you touch electrode E0, TRACK000.mp3 will play. When you touch electrode E1, TRACK001.mp3 will play, and so on.
+
+    SD card    
+    │
+      TRACK000.mp3  
+      TRACK001.mp3  
+      TRACK002.mp3  
+      TRACK003.mp3  
+      TRACK004.mp3  
+      TRACK005.mp3  
+      TRACK006.mp3  
+      TRACK007.mp3  
+      TRACK008.mp3  
+      TRACK009.mp3  
+      TRACK010.mp3  
+      TRACK011.mp3  
 
 ## Requirements
 * You should make sure that you have followed our [Setting up Arduino with your Touch Board](http://www.bareconductive.com/make/setting-up-arduino-with-your-touch-board/) tutorial before using this (or any other) of our code examples

@@ -5,6 +5,27 @@
  ------------------------------
  
  Touch_MP3.ino - touch triggered MP3 playback
+
+ You need twelve MP3 files named TRACK000.mp3 to TRACK011.mp3 in the root of the 
+ microSD card. 
+ 
+ When you touch electrode E0, TRACK000.mp3 will play. When you touch electrode 
+ E1, TRACK001.mp3 will play, and so on.
+
+  SD card    
+  │
+    TRACK000.mp3  
+    TRACK001.mp3  
+    TRACK002.mp3  
+    TRACK003.mp3  
+    TRACK004.mp3  
+    TRACK005.mp3  
+    TRACK006.mp3  
+    TRACK007.mp3  
+    TRACK008.mp3  
+    TRACK009.mp3  
+    TRACK010.mp3  
+    TRACK011.mp3  
  
  Based on code by Jim Lindblom and plenty of inspiration from the Freescale 
  Semiconductor datasheets and application notes.
