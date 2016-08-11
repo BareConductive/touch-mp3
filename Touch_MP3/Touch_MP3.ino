@@ -134,7 +134,7 @@ void readTouchInputs(){
               if(MP3player.isPlaying()){
                 if(lastPlayed==i && !REPLAY_MODE){
                   // if we're already playing the requested track, stop it
-                  // (but only if we're in REPLAY_MODE)
+                  // (but only if we're not in REPLAY_MODE)
                   MP3player.stopTrack();
                   Serial.print("stopping track ");
                   Serial.println(i-firstPin);
