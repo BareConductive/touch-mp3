@@ -82,15 +82,17 @@ const bool WAIT_FOR_SERIAL = false;
 const bool MPR121_DATASTREAM_ENABLE = false;
 
 // MP3 variables
-SFEMP3Shield MP3player;
 uint8_t result;
 uint8_t lastPlayed = 0;
 
+// MP3 constants
+SFEMP3Shield MP3player;
+
 // MP3 behaviour constants
-const bool REPLAY_MODE = true;  // By default, touching an electrode repeatedly will
+const bool REPLAY_MODE = true;  // by default, touching an electrode repeatedly will
                                 // play the track again from the start each time
                                 //
-                                // If you set this to false, repeatedly touching an
+                                // if you set this to false, repeatedly touching an
                                 // electrode will stop the track if it is already
                                 // playing, or play it from the start if it is not
 
@@ -99,7 +101,6 @@ SdFat sd;
 
 void setup() {
   Serial.begin(BAUD_RATE);
-
   pinMode(LED_BUILTIN, OUTPUT);
 
   if (WAIT_FOR_SERIAL) {
@@ -150,13 +151,11 @@ void setup() {
 
   MPR121.setFFI(FFI_10);
   MPR121.setSFI(SFI_10);
-
-  pinMode(LED_BUILTIN, OUTPUT);
+  MPR121.setGlobalCDT(CDT_4US);  // reasonable for larger capacitances
+  
   digitalWrite(LED_BUILTIN, HIGH);  // switch on user LED while auto calibrating electrodes
-
-  MPR121.setGlobalCDT(CDT_4US);  // reasonable for larger capacitances at the end of long cables when using Interactive Wall Kit
-  MPR121.autoSetElectrodeCDC();  // autoset all electrode settings
-
+  delay(1000);
+  MPR121.autoSetElectrodes();  // autoset all electrode settings
   digitalWrite(LED_BUILTIN, LOW);
 
   result = MP3player.begin();
@@ -175,7 +174,7 @@ void loop() {
   // only make an action if we have one or fewer pins touched
   // ignore multiple touches
   if (MPR121.getNumTouches() <= 1) {
-    for (int i=0; i < 12; i++) {  // Check which electrodes were pressed
+    for (int i=0; i < 12; i++) {  // check which electrodes were pressed
       if (MPR121.isNewTouch(i)) {
           if (!MPR121_DATASTREAM_ENABLE) {
             Serial.print("pin ");
